@@ -34,6 +34,9 @@ class ContactsTableViewController: UITableViewController {
         let moveButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: Selector("toggleEdit"))
         navigationItem.leftBarButtonItem = moveButton
         
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addContact"))
+        navigationItem.rightBarButtonItem = addButton
+        
         let jake = Contact(phoneNumber: "557-0928")
         let jim = Contact(name: "Jim", phoneNumber: "715-1590")
         let lana = Contact(name: "Lana")
@@ -80,6 +83,18 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    func addContact() {
+        let newContact = Contact(name: "New Contact")
+        self.contacts.append(newContact)
+        let newIndexPath = NSIndexPath(forRow: self.contacts.count - 1, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
     }
 }
 
